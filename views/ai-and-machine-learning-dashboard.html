@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Development Dashboard</title>
+    <style>
+        :root {
+            --primary-color: #00ff9d;
+            --secondary-color: #2a2d3e;
+            --background-dark: #1a1d2b;
+            --text-primary: #ffffff;
+            --text-secondary: #8b8d93;
+            --accent-blue: #2196f3;
+            --accent-green: #4caf50;
+            --accent-purple: #7c4dff;
+            --danger-color: #ff4757;
+            --card-bg: #2a2d3e;
+            --hover-color: #34374c;
+            --sidebar-hover: rgba(0, 255, 157, 0.2);
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--background-dark);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 270px;
+            height: 100vh;
+            background-color: var(--secondary-color);
+            padding: 20px 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 3px 0 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .sidebar-header {
+            text-align: center;
+            font-size: 1.8em;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        .sidebar-menu {
+            flex: 1;
+        }
+
+        .sidebar-menu li {
+            list-style: none;
+            margin: 15px 0;
+        }
+
+        .sidebar-menu a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 15px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .sidebar-menu a i {
+            font-size: 1.4em;
+        }
+
+        .sidebar-menu a:hover {
+            background-color: var(--sidebar-hover);
+            color: var(--primary-color);
+        }
+
+        .sidebar-menu .active {
+            background-color: var(--sidebar-hover);
+            color: var(--primary-color);
+        }
+
+        .logout-btn {
+            background-color: var(--danger-color);
+            border: none;
+            color: var(--text-primary);
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background-color: var(--hover-color);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 30px;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .dashboard-header h1 {
+            font-size: 2.2em;
+            color: var(--primary-color);
+        }
+
+        .dashboard-header p {
+            font-size: 1.2em;
+            color: var(--accent-blue);
+        }
+
+        /* Progress Section */
+        .progress-container {
+            margin: 30px 0;
+        }
+
+        .progress-bar {
+            width: 90%;
+            height: 20px;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar-inner {
+            height: 100%;
+            background-color: var(--accent-green);
+            width: 0; /* Initial state for animation */
+            animation: grow 2s ease-in-out forwards;
+        }
+
+        @keyframes grow {
+            to {
+                width: 80%;
+            }
+        }
+
+        .progress-label {
+            margin-top: 10px;
+            font-size: 1.2em;
+        }
+
+        /* Motivation Section */
+        .motivation {
+            margin: 20px 0;
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .motivation h2 {
+            color: var(--accent-green);
+        }
+
+        .motivation p {
+            font-size: 1.2em;
+            color: var(--text-secondary);
+        }
+
+        /* Resources Section */
+        .resources {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .resource-card {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .resource-card:hover {
+            transform: scale(1.05);
+        }
+
+        .resource-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .resource-card p {
+            color: var(--text-secondary);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">TechPath</div>
+            <ul class="sidebar-menu">
+                <li><a href="./dashboard.html" class="active"><i class="fas fa-home"></i>Dashboard</a></li>
+                <li><a href="./create-webdevpath.html"><i class="fas fa-plus"></i>Create Path</a></li>
+                <li><a href="./webdev-learning.html"><i class="fas fa-book"></i>Learning</a></li>
+                <li><a href="./resources.html"><i class="fas fa-tools"></i>Resources</a></li>
+                <li><a href="./profile.html"><i class="fas fa-user"></i>Profile</a></li>
+            </ul>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="dashboard-header">
+                <h1>Welcome back, <span id="username">Guest</span>!</h1>
+                <p>Current Path: <strong>Web Development</strong></p>
+            </header>
+
+            <!-- Progress Section -->
+            <section class="progress-container">
+                <h2>Your Progress</h2>
+                <div class="progress-bar">
+                    <div class="progress-bar-inner"></div>
+                </div>
+                <p class="progress-label">80% Completed</p>
+            </section>
+
+            <!-- Motivation Section -->
+            <section class="motivation">
+                <h2>Keep Going!</h2>
+                <p>"The best way to predict your future is to create it."</p>
+            </section>
+
+            <!-- Resources Section -->
+            <section class="resources">
+                <div class="resource-card">
+                    <h3>HTML & CSS</h3>
+                    <p>Learn the building blocks of the web.</p>
+                </div>
+                <div class="resource-card">
+                    <h3>JavaScript</h3>
+                    <p>Bring interactivity to your web pages.</p>
+                </div>
+                <div class="resource-card">
+                    <h3>React</h3>
+                    <p>Build modern, reactive web apps.</p>
+                </div>
+                <div class="resource-card">
+                    <h3>Node.js</h3>
+                    <p>Master backend development with JavaScript.</p>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer>
+                <p>&copy; 2024 TechPath. All rights reserved.</p>
+            </footer>
+        </main>
+    </div>
+
+    <script>
+        // Set username dynamically
+        document.getElementById("username").textContent = sessionStorage.getItem("username") || "Guest";
+
+        // Logout functionality
+        function logout() {
+            sessionStorage.clear();
+            alert("Logged out successfully!");
+            window.location.href = "./login.html";
+        }
+    </script>
+</body>
+</html>

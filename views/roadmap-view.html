@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechPath - Your Learning Roadmap</title>
+    <link rel="stylesheet" href="../public/css/global.css">
+    <link rel="stylesheet" href="../public/css/roadmap-view.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <i class="fas fa-code"></i>
+            <span>TechPath</span>
+        </div>
+        <nav class="nav-links">
+            <a href="dashboard.html">
+                <i class="fas fa-laptop-code"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="create-roadmap.html">
+                <i class="fas fa-route"></i>
+                <span>Create Path</span>
+            </a>
+            <a href="roadmap-view.html" class="active">
+                <i class="fas fa-map-marked-alt"></i>
+                <span>My Roadmap</span>
+            </a>
+            <a href="resources.html">
+                <i class="fas fa-book-open"></i>
+                <span>Resources</span>
+            </a>
+            <a href="profile.html">
+                <i class="fas fa-user-circle"></i>
+                <span>Profile</span>
+            </a>
+        </nav>
+    </div>
+
+    <main class="main-content">
+        <header class="roadmap-header">
+            <div class="header-content">
+                <div class="path-info">
+                    <h1>Full Stack Development Path</h1>
+                    <div class="path-stats">
+                        <span><i class="fas fa-clock"></i> 12 months</span>
+                        <span><i class="fas fa-tasks"></i> 65% Complete</span>
+                        <span><i class="fas fa-calendar-alt"></i> Started: Jan 2024</span>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-secondary">
+                        <i class="fas fa-share"></i> Share
+                    </button>
+                    <button class="btn-primary">
+                        <i class="fas fa-download"></i> Export
+                    </button>
+                </div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress" style="width: 65%;"></div>
+            </div>
+        </header>
+
+        <div class="roadmap-container">
+            <div class="roadmap-timeline">
+                <!-- Beginner Level -->
+                <div class="timeline-section completed">
+                    <div class="section-header">
+                        <h2>Beginner Level</h2>
+                        <span class="completion-badge">100% Complete</span>
+                    </div>
+                    
+                    <div class="skill-nodes">
+                        <div class="skill-node completed">
+                            <div class="node-header">
+                                <i class="fab fa-html5"></i>
+                                <h3>HTML & CSS Foundations</h3>
+                                <span class="status">Completed</span>
+                            </div>
+                            <div class="node-content">
+                                <div class="resources">
+                                    <h4>Resources</h4>
+                                    <ul>
+                                        <li>
+                                            <a href="#" class="resource-link">
+                                                <i class="fas fa-video"></i>
+                                                HTML & CSS Full Course
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="resource-link">
+                                                <i class="fas fa-book"></i>
+                                                MDN Web Docs
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="projects">
+                                    <h4>Projects</h4>
+                                    <ul>
+                                        <li>Build a Portfolio Site</li>
+                                        <li>Responsive Landing Page</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="skill-node completed">
+                            <div class="node-header">
+                                <i class="fab fa-js"></i>
+                                <h3>JavaScript Basics</h3>
+                                <span class="status">Completed</span>
+                            </div>
+                            <div class="node-content">
+                                <!-- Similar content structure -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Intermediate Level -->
+                <div class="timeline-section active">
+                    <div class="section-header">
+                        <h2>Intermediate Level</h2>
+                        <span class="completion-badge">45% Complete</span>
+                    </div>
+                    
+                    <div class="skill-nodes">
+                        <div class="skill-node active">
+                            <div class="node-header">
+                                <i class="fab fa-react"></i>
+                                <h3>React Development</h3>
+                                <span class="status">In Progress</span>
+                            </div>
+                            <div class="node-content">
+                                <div class="resources">
+                                    <h4>Resources</h4>
+                                    <ul>
+                                        <li>
+                                            <a href="#" class="resource-link">
+                                                <i class="fas fa-graduation-cap"></i>
+                                                React Complete Guide
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="resource-link">
+                                                <i class="fas fa-code"></i>
+                                                Practice Exercises
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="progress-tracker">
+                                    <h4>Progress</h4>
+                                    <div class="checklist">
+                                        <label class="checkbox-item">
+                                            <input type="checkbox" checked>
+                                            <span>React Basics</span>
+                                        </label>
+                                        <label class="checkbox-item">
+                                            <input type="checkbox" checked>
+                                            <span>Components & Props</span>
+                                        </label>
+                                        <label class="checkbox-item">
+                                            <input type="checkbox">
+                                            <span>State Management</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="skill-node">
+                            <div class="node-header">
+                                <i class="fas fa-server"></i>
+                                <h3>Backend Development</h3>
+                                <span class="status">Locked</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advanced Level -->
+                <div class="timeline-section locked">
+                    <div class="section-header">
+                        <h2>Advanced Level</h2>
+                        <span class="completion-badge">0% Complete</span>
+                    </div>
+                    
+                    <div class="skill-nodes">
+                        <!-- Advanced nodes -->
+                    </div>
+                </div>
+            </div>
+
+            <aside class="roadmap-sidebar">
+                <div class="card achievement-card">
+                    <h3><i class="fas fa-trophy"></i> Achievements</h3>
+                    <div class="achievements-list">
+                        <div class="achievement-item">
+                            <img src="/api/placeholder/40/40" alt="Achievement Badge">
+                            <div class="achievement-info">
+                                <h4>Frontend Master</h4>
+                                <p>Completed all frontend modules</p>
+                            </div>
+                        </div>
+                        <!-- More achievements -->
+                    </div>
+                </div>
+
+                <div class="card resources-card">
+                    <h3><i class="fas fa-bookmark"></i> Saved Resources</h3>
+                    <div class="saved-resources">
+                        <a href="#" class="resource-item">
+                            <i class="fas fa-video"></i>
+                            <span>Advanced React Patterns</span>
+                        </a>
+                        <!-- More resources -->
+                    </div>
+                </div>
+
+                <div class="card notes-card">
+                    <h3><i class="fas fa-sticky-note"></i> My Notes</h3>
+                    <div class="notes-list">
+                        <!-- Notes content -->
+                    </div>
+                    <button class="btn-secondary full-width">
+                        <i class="fas fa-plus"></i> Add Note
+                    </button>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle skill node expansion
+            const skillNodes = document.querySelectorAll('.skill-node');
+            skillNodes.forEach(node => {
+                node.addEventListener('click', function() {
+                    if (!this.classList.contains('locked')) {
+                        this.classList.toggle('expanded');
+                    }
+                });
+            });
+
+            // Handle checkboxes
+            const checkboxes = document.querySelectorAll('.checkbox-item input');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    updateProgress();
+                });
+            });
+
+            function updateProgress() {
+                const totalCheckboxes = checkboxes.length;
+                const checkedBoxes = document.querySelectorAll('.checkbox-item input:checked').length;
+                const progressPercentage = (checkedBoxes / totalCheckboxes) * 100;
+                
+                // Update progress bar
+                document.querySelector('.progress').style.width = `${progressPercentage}%`;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Engineering Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #00aaff;
+            --secondary-color: #2a2d3e;
+            --background-dark: #1a1d2b;
+            --text-primary: #ffffff;
+            --text-secondary: #8b8d93;
+            --accent-green: #4caf50;
+            --accent-blue: #2196f3;
+            --hover-color: #34374c;
+            --gradient: linear-gradient(135deg, #4caf50, #00aaff);
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--background-dark);
+            color: var(--text-primary);
+            margin: 0;
+            display: flex;
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: var(--secondary-color);
+            padding: 20px;
+            height: 100vh;
+        }
+
+        .sidebar-header {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .sidebar-menu {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar-menu li {
+            margin: 15px 0;
+        }
+
+        .sidebar-menu a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .sidebar-menu a:hover {
+            color: var(--primary-color);
+            transform: translateX(10px);
+        }
+
+        .sidebar-menu i {
+            margin-right: 10px;
+        }
+
+        .logout-btn {
+            margin-top: 20px;
+            width: 100%;
+            padding: 10px;
+            background: var(--hover-color);
+            color: var(--text-primary);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .logout-btn:hover {
+            background: var(--primary-color);
+        }
+
+        .main-content {
+            flex: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: var(--gradient);
+            padding: 40px 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            color: #000;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        .hero-section h1 {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .hero-section p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .hero-section .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .action-buttons a {
+            padding: 10px 20px;
+            background: var(--accent-blue);
+            color: var(--text-primary);
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .action-buttons a:hover {
+            background: var(--hover-color);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Swiper Section */
+        .swiper {
+            width: 100%;
+            height: 300px;
+            margin: 20px 0;
+        }
+
+        .swiper-slide {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            background: var(--hover-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .swiper-slide iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+
+        /* Certification Tracker */
+        .certification-tracker {
+            margin: 40px 0;
+        }
+
+        .certification-tracker h2 {
+            font-size: 24px;
+            color: var(--accent-green);
+            margin-bottom: 20px;
+        }
+
+        .certification-progress {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .certification-progress span {
+            flex: 1;
+            margin-left: 10px;
+            font-size: 16px;
+            color: var(--text-primary);
+        }
+
+        .progress-bar {
+            flex: 3;
+            height: 20px;
+            background: var(--hover-color);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar div {
+            height: 100%;
+            width: 60%; /* Example percentage */
+            background: var(--primary-color);
+            border-radius: 10px 0 0 10px;
+        }
+
+        /* Community Section */
+        .community {
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .community h2 {
+            color: var(--accent-blue);
+            margin-bottom: 15px;
+        }
+
+        .community a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .community a:hover {
+            text-decoration: underline;
+        }
+
+        /* Gamification */
+        .badges {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+
+        .badge {
+            background: var(--hover-color);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-green);
+            font-size: 18px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">TechPath</div>
+            <ul class="sidebar-menu">
+                <li><a href="/web-development-dashboard"><i class="fas fa-laptop-code"></i>Dashboard</a></li>
+                <li><a href="/create-webdevpath"><i class="fas fa-plus"></i>Create Path</a></li>
+                <li><a href="/learning"><i class="fas fa-book"></i>Learning</a></li>
+                <li><a href="/roadmap"><i class="fas fa-map-marked-alt"></i>Roadmap</a></li>
+                <li><a href="/resources"><i class="fas fa-tools"></i>Resources</a></li>
+                <li><a href="/profile"><i class="fas fa-user"></i>Profile</a></li>
+            </ul>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Hero Section -->
+            <section class="hero-section">
+                <h1>Welcome, <span id="username">Cloud Engineer</span>!</h1>
+                <p>Your journey to mastering cloud technologies starts here. Follow the roadmap below to get started.</p>
+                <div class="action-buttons">
+                    <a href="#">Start Learning</a>
+                    <a href="#">View Resources</a>
+                </div>
+            </section>
+
+            <!-- Swiper Section -->
+            <section class="section">
+                <h3>Featured Cloud Engineering Resources</h3>
+                <div class="swiper">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <iframe src="https://www.youtube.com/embed/sbpFzE7xzO8" allowfullscreen></iframe>
+                        </div>
+                        <div class="swiper-slide">
+                            <iframe src="https://www.youtube.com/embed/ZSpkcpGmflE" allowfullscreen></iframe>
+                        </div>
+                        <div class="swiper-slide">
+                            <iframe src="https://www.youtube.com/embed/3ZqBtGtShMU" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+            </section>
+
+            <!-- Certification Tracker -->
+            <section class="certification-tracker">
+                <h2>Certification Tracker</h2>
+                <div class="certification-progress">
+                    <div class="progress-bar">
+                        <div></div>
+                    </div>
+                    <span>60% Complete</span>
+                </div>
+            </section>
+
+            <!-- Community Section -->
+            <section class="community">
+                <h2>Join the Community</h2>
+                <p>Connect with other learners and experts in our <a href="https://community.cloudengineering.com">Cloud Engineering Forum</a>.</p>
+            </section>
+
+            <!-- Gamification Section -->
+            <section class="gamification">
+                <h2>Your Achievements</h2>
+                <div class="badges">
+                    <div class="badge">⭐</div>
+                    <div class="badge">🌟</div>
+                    <div class="badge">🏆</div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        const username = sessionStorage.getItem("username");
+        if (!username) {
+            alert("Please log in to access this page.");
+            window.location.href = "/login";
+        } else {
+            document.getElementById("username").textContent = username;
+        }
+
+        function logout() {
+            sessionStorage.clear();
+            alert("Logged out successfully!");
+            window.location.href = "/login";
+        }
+
+        const swiper = new Swiper('.swiper', {
+            loop: true,
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+        });
+    </script>
+</body>
+</html>
