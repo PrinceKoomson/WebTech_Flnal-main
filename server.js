@@ -1,77 +1,66 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
-const authRoutes = require('./routes/auth');
+const cors = require('cors'); // Add this line
 
 const app = express();
-const port = 3001;
+const port = 3000;
 
-// Middleware
-app.use(bodyParser.urlencoded({ extended: true }));
+// Middleware to parse JSON bodies
 app.use(bodyParser.json());
+
+// Enable CORS
+app.use(cors()); // Add this line
+
+// Serve static files
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'views')));
 
-app.get('/web-development-dashboard', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views/web-development-dashboard.html'));
-});
-
-app.get('/create-webdevpath', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views/create-webdevpath.html'));
-});
-
-app.get('/webdev-learning', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views/webdev-learning.html'));
-});
-app.get('/roadmap', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views/roadmap-view.html'));
-});
-
-
-app.get('/resources', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views/resource.html'));
-});
-
-app.get('/profile', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views/profile.html'));
-});
-app.get('/learning', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views/learning.html'));
-});
 // Serve HTML Pages
-app.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views/login.html'));
+app.get('/login.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/login.html'));
 });
 
-app.get('/signup', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views/signup.html'));
+app.get('/signup.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/signup.html'));
 });
 
 app.get('/general-dashboard.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views/general-dashboard.html'));
+    res.sendFile(path.join(__dirname, 'public/general-dashboard.html'));
 });
 
 // Career Dashboards
-app.get('/dashboard-web-development', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views/web-development-dashboard.html'));
+app.get('/dashboard-web-development.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/dashboard-web-development.html'));
 });
 
-app.get('/dashboard-cybersecurity', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views/cybersecurity-dashboard.html'));
-});
-app.get('/dashboard-Cloud-Engineering', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views/cloud-engineering-dashboard.html'));
+app.get('/dashboard-cybersecurity.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/dashboard-cybersecurity.html'));
 });
 
-app.get('/dashboard-ai-&-machine-learning', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views/ai-and-machine-learning-dashboard.html'));
+app.get('/dashboard-cloud-engineering.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/dashboard-cloud-engineering.html'));
 });
 
-// Use Authentication Routes
-app.use(authRoutes);
+app.get('/dashboard-ai-and-machine-learning.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/dashboard-ai-and-machine-learning.html'));
+});
+
+// POST endpoint to handle signup form submission
+app.post('/api/signup', (req, res) => {
+    const { name, email, password, career_interest, skill_level, time_commitment } = req.body;
+
+    console.log('Received signup data:', req.body);
+
+    // Here you would typically save the data to a database
+    // For now, we'll just send a success response
+
+    res.json({
+        message: 'Signup successful!',
+        redirectUrl: '/general-dashboard.html'
+    });
+});
 
 // Start Server
 app.listen(port, '0.0.0.0', () => {
-    console.log(`Server running at http://16.170.214.112:${port}`);
+    console.log(`Server running at http://localhost:${port}`);
 });
-

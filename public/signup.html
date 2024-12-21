@@ -111,7 +111,7 @@
                 <select id="career_interest" name="career_interest" required>
                     <option value="" disabled selected>Select your career interest</option>
                     <option value="Web Development">Web Development</option>
-                    <option value="Cloud Engineering">Data Science</option>
+                    <option value="Data Science">Data Science</option>
                     <option value="Cybersecurity">Cybersecurity</option>
                     <option value="AI & Machine Learning">AI & Machine Learning</option>
                 </select>
@@ -141,7 +141,7 @@
     <script>
         document.getElementById('signupForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-        
+
             const formData = {
                 name: document.getElementById('name').value,
                 email: document.getElementById('email').value,
@@ -150,27 +150,34 @@
                 skill_level: document.getElementById('skill_level').value,
                 time_commitment: document.getElementById('time_commitment').value,
             };
-        
+
+            console.log('Form Data:', formData);
+
             try {
-                const response = await fetch('./signup', {
+                const response = await fetch('http://localhost:3000/api/signup', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(formData),
                 });
-        
-                const data = await response.json();
-        
+
+                console.log('Response:', response);
+
                 if (response.ok) {
+                    const data = await response.json();
+                    console.log('Response Data:', data);
                     Swal.fire('Signup Successful!', 'Redirecting to your dashboard...', 'success').then(() => {
-                        window.location.href = data.redirectUrl;
+                        window.location.href = `http://localhost:3000${data.redirectUrl}`;
                     });
                 } else {
-                    Swal.fire('Signup Failed', data.message || 'Something went wrong.', 'error');
+                    const errorData = await response.json();
+                    console.error('Error Data:', errorData);
+                    Swal.fire('Signup Failed', errorData.message || 'Something went wrong.', 'error');
                 }
             } catch (error) {
+                console.error('Error:', error);
                 Swal.fire('Error', 'An unexpected error occurred. Please try again later.', 'error');
             }
         });
-        </script>        
+    </script>
 </body>
 </html>
