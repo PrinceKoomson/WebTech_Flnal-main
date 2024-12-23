@@ -99,7 +99,7 @@
         <form id="loginForm">
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                <input type="email" id="email" name="email" placeholder="Enter your email" autocomplete="email" required>
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
@@ -117,7 +117,7 @@
             const password = document.getElementById('password').value.trim();
 
             try {
-                const response = await fetch('./login', {
+                const response = await fetch('http://localhost:3000/api/auth/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email, password }),
@@ -130,7 +130,8 @@
                         const careerPath = data.user.career_interest.replace(/\s+/g, '-').toLowerCase();
                         sessionStorage.setItem('username', data.user.name); // Save user name
                         sessionStorage.setItem('careerInterest', careerPath); // Save career path
-                        window.location.href = `/dashboard-${careerPath}`;
+                        window.location.href = `http://localhost:3000/${careerPath.toLowerCase()}-dashboard.html`;
+                        ;
                     });
                 } else {
                     Swal.fire('Login Failed', data.message || 'Invalid credentials.', 'error');

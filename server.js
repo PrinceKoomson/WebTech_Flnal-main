@@ -1,19 +1,30 @@
+// filepath: /c:/Users/Prince Koomson/Downloads/WebTech_FInal-main/server.js
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
-const cors = require('cors'); // Add this line
+const cors = require('cors');
+require('dotenv').config(); // Load environment variables from .env file
+const authRoutes = require('./routes/auth');
+const roadmapRoutes = require('./routes/roadmapRoutes');
+const pool = require('./config/db'); // Ensure this line is added to import the db configuration
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000; // Use environment variable for port if available
 
 // Middleware to parse JSON bodies
 app.use(bodyParser.json());
 
 // Enable CORS
-app.use(cors()); // Add this line
+app.use(cors());
 
 // Serve static files
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Use auth routes
+app.use('/api/auth', authRoutes);
+
+// Use roadmap routes
+app.use('/api/roadmap', roadmapRoutes);
 
 // Serve HTML Pages
 app.get('/login.html', (req, res) => {
@@ -29,35 +40,20 @@ app.get('/general-dashboard.html', (req, res) => {
 });
 
 // Career Dashboards
-app.get('/dashboard-web-development.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/dashboard-web-development.html'));
+app.get('/web-development-dashboard.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/web-development-dashboard.html'));
 });
 
-app.get('/dashboard-cybersecurity.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/dashboard-cybersecurity.html'));
+app.get('/cyber-security-dashboard.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/cybersecurity-dashboard.html'));
 });
 
-app.get('/dashboard-cloud-engineering.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/dashboard-cloud-engineering.html'));
+app.get('/cloud-engineering-dashboard.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/cloud-engineering-dashboard.html'));
 });
 
-app.get('/dashboard-ai-and-machine-learning.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/dashboard-ai-and-machine-learning.html'));
-});
-
-// POST endpoint to handle signup form submission
-app.post('/api/signup', (req, res) => {
-    const { name, email, password, career_interest, skill_level, time_commitment } = req.body;
-
-    console.log('Received signup data:', req.body);
-
-    // Here you would typically save the data to a database
-    // For now, we'll just send a success response
-
-    res.json({
-        message: 'Signup successful!',
-        redirectUrl: '/general-dashboard.html'
-    });
+app.get('/ai-and-machine-learning-dashboard.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/ai-and-machine-learning-dashboard.html'));
 });
 
 // Start Server

@@ -1,17 +1,16 @@
 const express = require('express');
-const mysql = require('mysql2/promise');
+const { Pool } = require('pg'); // Use pg library for PostgreSQL
 const router = express.Router();
 
-// Database configuration
-const dbConfig = {
-  host: 'localhost',
-  user: 'your_username',
-  password: 'your_password',
-  database: 'roadmap_generator'
-};
+// Database configuration using environment variables
+const pool = new Pool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  port: process.env.DB_PORT,
+});
 
-// Create database pool
-const pool = mysql.createPool(dbConfig);
 
 // Helper class for roadmap generation
 class RoadmapGenerator {

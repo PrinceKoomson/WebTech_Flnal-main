@@ -113,9 +113,9 @@
         document.getElementById('welcomeMessage').textContent = `Welcome, ${userName}!`;
         document.getElementById('userMessage').textContent = `We’re excited to help you succeed in ${careerPath.replace(/-/g, ' ')}.`;
 
-        // Redirect to specific dashboard
-        function redirectToDashboard() {
-            window.location.href = `/dashboard-${careerPath}`;
+         // Redirect to specific dashboard
+         function redirectToDashboard() {
+            window.location.href = `/${careerPath.toLowerCase()}-dashboard.html`; // Corrected the URL format
         }
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>

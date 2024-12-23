@@ -1,18 +1,20 @@
-const mysql = require('mysql2');
+const { Pool } = require('pg');
+require('dotenv').config(); // Load environment variables from .env file
 
-const db = mysql.createConnection({
-    host: 'localhost',          // XAMPP MySQL runs on localhost
-    user: 'root',               // Default XAMPP username
-    password: '',               // Default XAMPP password (empty by default)
-    database: 'techpath'        // The database you just created
+const pool = new Pool({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    port: process.env.DB_PORT, // Add port if necessary
 });
 
-db.connect((err) => {
+pool.connect((err) => {
     if (err) {
         console.error('Database connection failed:', err.message);
     } else {
-        console.log('Connected to the MySQL database.');
+        console.log('Connected to the PostgreSQL database.');
     }
 });
 
-module.exports = db;
+module.exports = pool;

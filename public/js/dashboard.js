@@ -1,13 +1,15 @@
 // Welcome Animation
 document.addEventListener("DOMContentLoaded", () => {
     const welcomeText = document.getElementById("welcome");
-    welcomeText.style.opacity = 0;
-    welcomeText.style.transform = "translateY(-20px)";
-    setTimeout(() => {
-        welcomeText.style.opacity = 1;
-        welcomeText.style.transform = "translateY(0)";
-        welcomeText.style.transition = "all 0.6s ease-out";
-    }, 500);
+    if (welcomeText) {
+        welcomeText.style.opacity = 0;
+        welcomeText.style.transform = "translateY(-20px)";
+        setTimeout(() => {
+            welcomeText.style.opacity = 1;
+            welcomeText.style.transform = "translateY(0)";
+            welcomeText.style.transition = "all 0.6s ease-out";
+        }, 500);
+    }
 });
 
 // Progress Bar Animation

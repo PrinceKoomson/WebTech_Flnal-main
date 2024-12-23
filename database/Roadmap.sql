@@ -1,5 +1,5 @@
-CREATE TABLE users (
-  id INT PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE roadmap_users (
+  id SERIAL PRIMARY KEY,
   username VARCHAR(255) NOT NULL,
   email VARCHAR(255) NOT NULL UNIQUE,
   current_roadmap VARCHAR(255),
@@ -7,21 +7,21 @@ CREATE TABLE users (
 );
 
 CREATE TABLE user_roadmaps (
-  id INT PRIMARY KEY AUTO_INCREMENT,
+  id SERIAL PRIMARY KEY,
   user_id INT NOT NULL,
   career_path VARCHAR(255) NOT NULL,
   roadmap_data JSON NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (user_id) REFERENCES users(id)
+  FOREIGN KEY (user_id) REFERENCES roadmap_users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE skill_progress (
-  id INT PRIMARY KEY AUTO_INCREMENT,
+  id SERIAL PRIMARY KEY,
   user_id INT NOT NULL,
   skill_name VARCHAR(255) NOT NULL,
   completed BOOLEAN DEFAULT FALSE,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (user_id) REFERENCES users(id),
-  UNIQUE KEY unique_user_skill (user_id, skill_name)
+  FOREIGN KEY (user_id) REFERENCES roadmap_users(id) ON DELETE CASCADE,
+  UNIQUE (user_id, skill_name)
 );

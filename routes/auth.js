@@ -1,6 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
-const db = require('../config/db');
+const pool = require('../config/db');
 
 const router = express.Router();
 
@@ -15,12 +15,13 @@ router.post('/signup', async (req, res) => {
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
         const query = `
-            INSERT INTO users (name, email, password, career_interest, skill_level, time_commitment)
-            VALUES (?, ?, ?, ?, ?, ?)
+            INSERT INTO users (name, email, password, career_interest, skill_level, time_commitment) -- Changed table name from users to roadmap_users
+            VALUES ($1, $2, $3, $4, $5, $6)
         `;
-        db.query(query, [name, email, hashedPassword, career_interest, skill_level, time_commitment], (err) => {
+        const values = [name, email, hashedPassword, career_interest, skill_level, time_commitment];
+        pool.query(query, values, (err) => {
             if (err) {
-                if (err.code === 'ER_DUP_ENTRY') {
+                if (err.code === '23505') { // PostgreSQL error code for unique violation
                     return res.status(409).json({ success: false, message: 'Email already exists.' });
                 }
                 console.error('Database error during signup:', err);
@@ -53,18 +54,19 @@ router.post('/login', async (req, res) => {
     }
 
     try {
-        const query = 'SELECT * FROM users WHERE email = ?';
-        db.query(query, [email], async (err, results) => {
+        const query = 'SELECT * FROM users WHERE email = $1'; // Changed table name from users to roadmap_users
+        const values = [email];
+        pool.query(query, values, async (err, result) => {
             if (err) {
                 console.error('Database error during login:', err);
                 return res.status(500).json({ success: false, message: 'Database error.' });
             }
 
-            if (results.length === 0) {
+            if (result.rows.length === 0) {
                 return res.status(404).json({ success: false, message: 'User not found.' });
             }
 
-            const user = results[0];
+            const user = result.rows[0];
             const isMatch = await bcrypt.compare(password, user.password);
 
             if (!isMatch) {
@@ -75,11 +77,14 @@ router.post('/login', async (req, res) => {
             res.status(200).json({
                 success: true,
                 message: 'Login successful!',
-                redirectUrl: `/general-dashboard.html?career=${user.career_interest.replace(/\s+/g, '-')}`,
                 user: {
+                    id: user.id,
                     name: user.name,
-                    career_interest: user.career_interest.replace(/\s+/g, '-'),
-                },
+                    email: user.email,
+                    career_interest: user.career_interest,
+                    skill_level: user.skill_level,
+                    time_commitment: user.time_commitment
+                }
             });
         });
     } catch (error) {
@@ -97,14 +102,15 @@ router.put('/profile', async (req, res) => {
     }
 
     try {
-        const query = 'UPDATE users SET name = ? WHERE email = ?';
-        db.query(query, [name, email], (err, results) => {
+        const query = 'UPDATE users SET name = $1 WHERE email = $2'; // Changed table name from users to roadmap_users
+        const values = [name, email];
+        pool.query(query, values, (err, result) => {
             if (err) {
                 console.error('Database error during profile update:', err);
                 return res.status(500).json({ success: false, message: 'Database error.' });
             }
 
-            if (results.affectedRows === 0) {
+            if (result.rowCount === 0) {
                 return res.status(404).json({ success: false, message: 'User not found.' });
             }
 
