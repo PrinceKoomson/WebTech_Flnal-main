@@ -131,6 +131,8 @@
                         sessionStorage.setItem('username', data.user.name); // Save user name
                         sessionStorage.setItem('careerInterest', careerPath); // Save career path
                        window.location.href = `/${careerPath.toLowerCase()}-dashboard.html`;
+                        // Store the token in localStorage
+                    localStorage.setItem('token', data.token);
 
                     });
                 } else {

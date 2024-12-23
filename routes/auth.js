@@ -1,6 +1,9 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const pool = require('../config/db');
+const authenticateToken = require('../Middleware/authMiddleware');
+
 
 const router = express.Router();
 
@@ -93,30 +96,53 @@ router.post('/login', async (req, res) => {
     }
 });
 
-// Profile Update Route
-router.put('/profile', async (req, res) => {
-    const { name, email } = req.body;
 
-    if (!name || !email) {
-        return res.status(400).json({ success: false, message: 'Name and email are required.' });
+// Profile Route
+router.get('/profile', authenticateToken, async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const query = 'SELECT name, email, career_interest, skill_level, time_commitment FROM users WHERE id = $1';
+        const values = [userId];
+        const result = await pool.query(query, values);
+
+        if (result.rowCount === 0) {
+            return res.status(404).json({ success: false, message: 'User not found.' });
+        }
+
+        const user = result.rows[0];
+        res.status(200).json({ success: true, user });
+    } catch (error) {
+        console.error('Server error during profile retrieval:', error);
+        res.status(500).json({ success: false, message: 'Server error.' });
+    }
+});
+
+
+// Profile Update Route
+router.put('/profile', authenticateToken, async (req, res) => {
+    const { name, email, career_interest, skill_level, time_commitment } = req.body;
+
+    if (!name || !email || !career_interest || !skill_level || !time_commitment) {
+        return res.status(400).json({ success: false, message: 'All fields are required.' });
     }
 
     try {
-        const query = 'UPDATE users SET name = $1 WHERE email = $2'; // Changed table name from users to roadmap_users
-        const values = [name, email];
-        pool.query(query, values, (err, result) => {
-            if (err) {
-                console.error('Database error during profile update:', err);
-                return res.status(500).json({ success: false, message: 'Database error.' });
-            }
+        const userId = req.user.id;
+        const query = `
+            UPDATE users
+            SET name = $1, email = $2, career_interest = $3, skill_level = $4, time_commitment = $5
+            WHERE id = $6
+        `;
+        const values = [name, email, career_interest, skill_level, time_commitment, userId];
+        const result = await pool.query(query, values);
 
-            if (result.rowCount === 0) {
-                return res.status(404).json({ success: false, message: 'User not found.' });
-            }
+        if (result.rowCount === 0) {
+            return res.status(404).json({ success: false, message: 'User not found.' });
+        }
 
-            console.log(`Profile updated: ${name} (${email})`);
-            res.status(200).json({ success: true, message: 'Profile updated successfully!' });
-        });
+ 
+        console.log(`Profile updated: ${name} (${email})`);
+        res.status(200).json({ success: true, message: 'Profile updated successfully!' });
     } catch (error) {
         console.error('Server error during profile update:', error);
         res.status(500).json({ success: false, message: 'Server error.' });
