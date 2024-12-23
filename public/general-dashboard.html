@@ -99,7 +99,14 @@
     <div class="container">
         <i class="icon fas fa-code"></i>
         <h1 id="welcomeMessage">Welcome to TechPath</h1>
-        <p id="userMessage">We’re setting up your experience. Please hold on...</p>
+        <p id="userMessage">Please select your career path to proceed.</p>
+        <select id="careerSelect">
+            <option value="" disabled selected>Select your career path</option>
+            <option value="web-development">Web Development</option>
+            <option value="cyber-security">Cyber Security</option>
+            <option value="cloud-engineering">Cloud Engineering</option>
+            <option value="ai-and-machine-learning">AI and Machine Learning</option>
+        </select>
         <button onclick="redirectToDashboard()">Proceed to Your Dashboard</button>
     </div>
 
@@ -107,15 +114,22 @@
         // Extract user name and career interest from the query parameters
         const params = new URLSearchParams(window.location.search);
         const userName = params.get('name') || "Tech Enthusiast";
-        const careerPath = params.get('career') || "index";
+        
 
         // Update welcome message dynamically
         document.getElementById('welcomeMessage').textContent = `Welcome, ${userName}!`;
-        document.getElementById('userMessage').textContent = `We’re excited to help you succeed in ${careerPath.replace(/-/g, ' ')}.`;
+        
 
          // Redirect to specific dashboard
          function redirectToDashboard() {
-            window.location.href = `/${careerPath.toLowerCase()}.html`; // Corrected the URL format
+            const careerSelect = document.getElementById('careerSelect');
+            const careerPath = careerSelect.value;
+
+            if (careerPath) {
+                window.location.href = `/${careerPath.toLowerCase()}-dashboard.html`; // Ensure the URL format is correct
+            } else {
+                Swal.fire('Error', 'Please select a career path.', 'error');
+            }
         }
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
