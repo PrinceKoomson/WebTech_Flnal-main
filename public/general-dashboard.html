@@ -107,7 +107,7 @@
         // Extract user name and career interest from the query parameters
         const params = new URLSearchParams(window.location.search);
         const userName = params.get('name') || "Tech Enthusiast";
-        const careerPath = params.get('career') || "dashboard";
+        const careerPath = params.get('career') || "general-dashboard";
 
         // Update welcome message dynamically
         document.getElementById('welcomeMessage').textContent = `Welcome, ${userName}!`;
