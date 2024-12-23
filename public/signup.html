@@ -154,7 +154,7 @@
             console.log('Form Data:', formData);
 
             try {
-                const response = await fetch('http://localhost:3000/api/auth/signup', {
+                const response = await fetch('https://web-tech-main.onrender.com/api/auth/signup', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(formData),
@@ -166,7 +166,7 @@
                     const data = await response.json();
                     console.log('Response Data:', data);
                     Swal.fire('Signup Successful!', 'Redirecting to your dashboard...', 'success').then(() => {
-                        window.location.href = `http://localhost:3000${data.redirectUrl}`;
+                        window.location.href = `https://web-tech-main.onrender.com${data.redirectUrl}`;
                     });
                 } else {
                     const errorData = await response.json();
